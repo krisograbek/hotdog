@@ -3,6 +3,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/val')
+@app.route('/value')
 def get_val():
-    return {'val': 'current value'}
+    return {'value': 'some value'}
