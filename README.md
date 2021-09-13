@@ -1,3 +1,7 @@
+## Description
+
+This is a template repository to build React-Flask applications. The code is based on [this tutorial](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project) by Miguel Grinberg
+
 ## Preparing a Flask API Backend
 
 ### Create and run `virtualenv`
