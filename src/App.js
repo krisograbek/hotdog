@@ -6,7 +6,7 @@ function App() {
   const [currentValue, setCurrentValue] = useState("")
 
   useEffect(() => {
-    fetch('/value').then(res => res.json()).then(data => {
+    fetch('/api/value').then(res => res.json()).then(data => {
       setCurrentValue(data.value)
     })
   }, [])
