@@ -10,13 +10,19 @@ def get_val():
     print(req_data)
     return {'value': 'some value'}
 
+@app.route('/api/name', methods=['POST'])
+def get_name():
+    req_data = request.get_json()
+    name = req_data['name']
+    return {'value': name}
+
 @app.route('/api/add', methods=['POST'])
 def get_add():
     req_data = request.get_json()
-    # name = req_data['name']
     img_data = req_data['results']
     # print(img_data)
-    print_image(img_data)
+    printed = print_image(img_data)
     # description = req_data['description']
     # print(name, description)
-    return {'value': "Hello"}
+    status = "Succes" if printed else "Error"
+    return {'value': status}

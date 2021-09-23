@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
+
 function UploadImage() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [status, setStatus] = useState("Before")
   const [result, setResult] = useState([])
 
+  const resultHeight = 224;
+  const resultWidth = 224;
 
   useEffect(() => {
     const body = {
@@ -19,7 +23,7 @@ function UploadImage() {
       body: JSON.stringify(body)
     })
       .then(response => response.json())
-      .then(data => data)
+      .then(data => setStatus(data.value))
       .catch(error => console.log(error))
   }, [result])
 
@@ -52,10 +56,10 @@ function UploadImage() {
 
   function drawImageToCanvas(image) {
     const canvas = document.createElement('canvas');
-    canvas.width = image.width;
-    canvas.height = image.height;
-    canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
-    // canvas.getContext('2d').drawImage(image, 0, 0, 224, 224);
+    canvas.width = resultWidth;
+    canvas.height = resultHeight
+    // canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+    canvas.getContext('2d').drawImage(image, 0, 0, resultWidth, resultHeight);
     return canvas;
   }
 
@@ -71,7 +75,7 @@ function UploadImage() {
         </div>
       )}
       <br />
-
+      <h3>Status: {status}</h3>
       <br />
       <input
         type="file"
