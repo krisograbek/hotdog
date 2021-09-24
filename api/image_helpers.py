@@ -14,10 +14,7 @@ def print_image(image):
     # print("mode: ", image.mode)
     np_image = np.array(image) / 255.0
     print("image shape", np_image.shape)
-    # np_image = np.expand_dims(np_image, axis=0)
-    images = list()
-    images.append(np_image)
-    images = np.array(images)
+    images = np.expand_dims(np_image, axis=0)
     print("image shape after expand", images.shape)
     if len(image) > 0:
         # predict_image(image)
