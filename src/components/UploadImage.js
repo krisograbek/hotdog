@@ -5,7 +5,7 @@ import { convertImage } from '../helpers/image';
 function UploadImage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [result, setResult] = useState([])
-  const [prediction, setPrediction] = useState("")
+  const [proba, setProba] = useState(-1)
 
   const resultHeight = 224;
   const resultWidth = 224;
@@ -24,11 +24,11 @@ function UploadImage() {
     })
       .then(response => response.json())
       .then(data => {
-        setPrediction(data.prediction);
-        console.log(prediction)
+        setProba(data.proba);
+        console.log(proba)
       })
       .catch(error => console.log(error))
-  }, [result])
+  }, [result, proba])
 
   const handleImg = () => {
     // get canvas with the image
@@ -44,9 +44,11 @@ function UploadImage() {
         <div>
           <img id="img" alt="not found" width={"450px"} src={selectedImage} />
           <br />
-          <h5>{prediction === 0 ? "No hot dog" : "Yes, hot dog"}</h5>
-          <p>I'm 80% sure</p>
-          <button onClick={() => setSelectedImage(null)}>Remove</button>
+          {proba > -1 &&
+            <h5>{proba > 0.5 ? "This is a hot dog" : "This is NOT a hot dog"}</h5>
+          }
+          {/* <p>I'm 80% sure</p> */}
+          <button onClick={() => { setSelectedImage(null); setProba(-1) }}>Remove</button>
           <button onClick={() => handleImg()}>Convert</button>
         </div>
       )}
