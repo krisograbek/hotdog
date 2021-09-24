@@ -24,4 +24,6 @@ yarn-error.log*
 
 venv
 __pycache__
-api/images
+api/images/*
+api/datasets/*
+api/models/*
