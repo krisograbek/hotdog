@@ -5,6 +5,7 @@ function UploadImage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [status, setStatus] = useState("Before")
   const [result, setResult] = useState([])
+  const [prediction, setPrediction] = useState("")
 
   const resultHeight = 224;
   const resultWidth = 224;
@@ -13,7 +14,6 @@ function UploadImage() {
     const body = {
       results: result
     }
-    console.log("Im in use effect")
     console.log(result)
     fetch(`/api/add`, {
       method: 'POST',
@@ -23,7 +23,11 @@ function UploadImage() {
       body: JSON.stringify(body)
     })
       .then(response => response.json())
-      .then(data => setStatus(data.value))
+      .then(data => {
+        setStatus(data.value);
+        setPrediction(data.prediction);
+        console.log(prediction)
+      })
       .catch(error => console.log(error))
   }, [result])
 
@@ -50,7 +54,6 @@ function UploadImage() {
       }
     }
     setResult(result_arr)
-    console.log(result_arr)
     // console.log(result)
   }
 
@@ -70,6 +73,7 @@ function UploadImage() {
         <div>
           <img id="img" alt="not found" width={"450px"} src={selectedImage} />
           <br />
+          <h5>{prediction === 0 ? "No hot dog" : "Yes, hot dog"}</h5>
           <button onClick={() => setSelectedImage(null)}>Remove</button>
           <button onClick={() => handleImg()}>Convert</button>
         </div>
