@@ -14,7 +14,7 @@ function UploadImage() {
     const body = {
       results: result
     }
-    console.log(result)
+    console.log("Result: ", result)
     fetch(`/api/add`, {
       method: 'POST',
       headers: {
@@ -25,10 +25,11 @@ function UploadImage() {
       .then(response => response.json())
       .then(data => {
         setProba(data.proba);
-        console.log(proba)
       })
       .catch(error => console.log(error))
-  }, [result, proba])
+  }, [result])
+
+  useEffect(() => { console.log("Proba =", proba) }, [proba])
 
   const handleImg = () => {
     // get canvas with the image
@@ -39,28 +40,42 @@ function UploadImage() {
 
   return (
     <div>
-      {selectedImage && (
-        <div>
-          <img id="img" alt="not found" width={"250px"} src={selectedImage} />
-          <br />
-          {proba > -1 &&
-            <h5>{proba > 0.5 ? "This is a hot dog" : "This is NOT a hot dog"}</h5>
-          }
-          {/* <p>I'm 80% sure</p> */}
-          <button onClick={() => { setSelectedImage(null); setProba(-1) }}>Remove</button>
-          <button onClick={() => handleImg()}>Convert</button>
-        </div>
-      )}
-      <br />
-      <br />
       <input
         type="file"
         name="myImage"
         onChange={(event) => {
           console.log(event.target.files[0]);
           setSelectedImage(URL.createObjectURL(event.target.files[0]));
+          setResult([]);
         }}
       />
+      {selectedImage && (
+        <div>
+          <br />
+          <button onClick={() => {
+            setSelectedImage(null);
+            setResult([])
+          }}>Remove</button>
+          <br />
+          <img id="img" alt="not found" width={"450px"} src={selectedImage} />
+          <br />
+          {proba > -1 &&
+            <div>{proba > 0.5 ?
+              <div>
+                <span style={{ color: 'green' }}>A Hot Dog</span>
+                <p>I'm {((proba) * 100).toFixed(1)} % confident</p>
+              </div>
+              :
+              <div>
+                <span style={{ color: 'red' }}>NOT a Hot Dog</span>
+                <p>I'm {((1 - proba) * 100).toFixed(1)} % confident</p>
+              </div>
+            }
+            </div>
+          }
+          <button style={{ fontSize: "24px" }} onClick={() => handleImg()}>Hot dog or not?</button>
+        </div>
+      )}
     </div>
   )
 }
