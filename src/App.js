@@ -1,24 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import UploadImage from './components/UploadImage';
 
 
 function App() {
-  const [currentValue, setCurrentValue] = useState("")
   const [name, setName] = useState("")
 
-  useEffect(() => {
-    fetch('/api/value').then(res => res.json()).then(data => {
-      setCurrentValue(data.value)
-    })
-  }, [])
 
   const testRequests = () => {
     const body = {
-      name: "Kris",
-      description: "Cool Dude!"
+      name: "Izunia",
+      description: "Cool Chick!"
     }
-    fetch(`/api/add`, {
+    fetch(`/api/name`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,7 +29,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Name: {name}</p>
+        <p>Name: {name}, Cool Chick!</p>
         <button onClick={testRequests}>Send POST</button>
         <UploadImage />
       </header>
