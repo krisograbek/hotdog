@@ -26,17 +26,14 @@ def get_add():
     # print(img_data)
     np_image = print_image(img_data)
     # print("My np image", np_image)
-    status = "Error"
     prediction = None
     if np_image is not None:
         probas = model.predict(np_image)
         print("My prediction", probas[0])
         prediction = 1 if probas[0][0] > 0.5 else 0
-        status = "Success"
     # description = req_data['description']
     # print(name, description)
     return {
-        'value': status,
         'prediction': prediction
         }
 

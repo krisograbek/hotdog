@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { convertImage } from '../helpers/image';
 
 
 function UploadImage() {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [status, setStatus] = useState("Before")
   const [result, setResult] = useState([])
   const [prediction, setPrediction] = useState("")
 
@@ -24,7 +24,6 @@ function UploadImage() {
     })
       .then(response => response.json())
       .then(data => {
-        setStatus(data.value);
         setPrediction(data.prediction);
         console.log(prediction)
       })
@@ -34,36 +33,8 @@ function UploadImage() {
   const handleImg = () => {
     // get canvas with the image
     const img = document.getElementById("img");
-    convertImage(img)
-  }
-
-  function convertImage(image) {
-    const canvas = drawImageToCanvas(image);
-    const ctx = canvas.getContext('2d');
-    // console.log(ctx.getImageData(100, 100, 1, 1).data)
-    console.log(canvas)
-
-    let result_arr = [];
-    for (let y = 0; y < canvas.height; y++) {
-      result_arr.push([]);
-      for (let x = 0; x < canvas.width; x++) {
-        let data = ctx.getImageData(x, y, 1, 1).data;
-        result_arr[y].push([data[0], data[1], data[2]]);
-        // result_arr[y][1].push(data[1]);
-        // result_arr[y][2].push(data[2]);
-      }
-    }
-    setResult(result_arr)
-    // console.log(result)
-  }
-
-  function drawImageToCanvas(image) {
-    const canvas = document.createElement('canvas');
-    canvas.width = resultWidth;
-    canvas.height = resultHeight
-    // canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
-    canvas.getContext('2d').drawImage(image, 0, 0, resultWidth, resultHeight);
-    return canvas;
+    const result_array = convertImage(img, resultWidth, resultHeight);
+    setResult(result_array)
   }
 
   return (
@@ -74,12 +45,12 @@ function UploadImage() {
           <img id="img" alt="not found" width={"450px"} src={selectedImage} />
           <br />
           <h5>{prediction === 0 ? "No hot dog" : "Yes, hot dog"}</h5>
+          <p>I'm 80% sure</p>
           <button onClick={() => setSelectedImage(null)}>Remove</button>
           <button onClick={() => handleImg()}>Convert</button>
         </div>
       )}
       <br />
-      <h3>Status: {status}</h3>
       <br />
       <input
         type="file"
