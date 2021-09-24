@@ -39,10 +39,9 @@ function UploadImage() {
 
   return (
     <div>
-      <h5>Upload and Display Image usign React Hook's</h5>
       {selectedImage && (
         <div>
-          <img id="img" alt="not found" width={"450px"} src={selectedImage} />
+          <img id="img" alt="not found" width={"250px"} src={selectedImage} />
           <br />
           {proba > -1 &&
             <h5>{proba > 0.5 ? "This is a hot dog" : "This is NOT a hot dog"}</h5>
