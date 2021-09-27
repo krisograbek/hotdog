@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
   },
   negative: {
     color: theme.palette.error.main
+  },
+  button: {
+    fontWeight: 'bolder'
   }
 }))
 
@@ -77,7 +80,7 @@ function UploadImage() {
               <Button variant="contained"
                 size="large"
                 component="span"
-              // className={classes.button}
+                className={classes.button}
               >
                 Upload Image
               </Button>
@@ -87,6 +90,7 @@ function UploadImage() {
             {selectedImage && (
               <Button
                 variant="contained"
+                className={classes.button}
                 onClick={() => {
                   setSelectedImage(null);
                   setResult([]);
@@ -106,15 +110,10 @@ function UploadImage() {
             spacing={2}
           >
             <Grid item>
-              <img id="img" alt="not found" width={"350px"} src={selectedImage} />
+              <img id="img" alt="not found" height={"550px"} src={selectedImage} />
             </Grid>
             {proba > -1 &&
               <Grid item>
-                {/* <Grid
-                container
-                direction="column"
-                spacing={3}
-              > */}
                 {proba > 0.5 ?
                   <div>
                     <span className={classes.positive}>A Hot Dog</span>
@@ -130,6 +129,7 @@ function UploadImage() {
               </Grid>
             }
             <Button
+              className={classes.button}
               variant="contained"
               style={{ fontSize: "24px" }}
               onClick={() => handleImg()}
