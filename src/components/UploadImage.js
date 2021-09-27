@@ -1,6 +1,7 @@
 import { Button, Grid, Input, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { convertImage } from '../helpers/image';
+import { get_result_sentence } from '../helpers/sentences';
 
 const resultHeight = 224;
 const resultWidth = 224;
@@ -114,7 +115,7 @@ function UploadImage() {
             </Grid>
             {proba > -1 &&
               <Grid item>
-                {proba > 0.5 ?
+                {/* {proba > 0.5 ?
                   <div>
                     <span className={classes.positive}>A Hot Dog</span>
                     <p>I'm {((proba) * 100).toFixed(0)} % confident</p>
@@ -124,7 +125,12 @@ function UploadImage() {
                     <span className={classes.negative}>NOT a Hot Dog</span>
                     <p>I'm {((1 - proba) * 100).toFixed(0)} % confident</p>
                   </div>
-                }
+                } */}
+                <p
+                  className={`${(proba > 0.5) ? classes.positive : classes.negative}`}
+                >
+                  {get_result_sentence(proba)}
+                </p>
                 {/* </Grid> */}
               </Grid>
             }
