@@ -1,38 +1,24 @@
 import keras
 from flask import Flask, request
 
-from image_helpers import print_image
+from image_helpers import image_to_numpy
 
 app = Flask(__name__)
-
 model = keras.models.load_model('./models/hotdog_vgg.h5')
 
-@app.route('/api/value')
-def get_val():
-    req_data = request.get_json()
-    print(req_data)
-    return {'value': 'some value'}
 
-@app.route('/api/name', methods=['POST'])
-def get_name():
-    req_data = request.get_json()
-    name = req_data['name']
-    return {'value': name}
-
-@app.route('/api/add', methods=['POST'])
-def get_add():
+@app.route('/api/predict', methods=['POST'])
+def get_predict():
     req_data = request.get_json()
     img_data = req_data['results']
-    np_image = print_image(img_data)
-    is_hotdog_proba = -1
-    if np_image is not None:
-        probas = model.predict(np_image)
-        print("My prediction", probas[0])
-        is_hotdog_proba = probas[0][0]
+    assert len(img_data) > 0, "Why are you sending me an empty array?"
+    image = image_to_numpy(img_data)
+    probas = model.predict(image)
+    print("My prediction", probas[0])
+    # get the probability if it is an image of a hot dog
+    is_hotdog_proba = probas[0][0]
 
-    return {
-        'proba': float(is_hotdog_proba)
-        }
+    return { 'proba': float(is_hotdog_proba) }
 
 if __name__ == "__main__":
     app.run()
