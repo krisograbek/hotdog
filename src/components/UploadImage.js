@@ -11,24 +11,29 @@ function UploadImage() {
   const resultWidth = 224;
 
   useEffect(() => {
-    const body = {
-      results: result
-    }
     console.log("Result: ", result)
-    fetch(`/api/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
-      .then(response => response.json())
-      .then(data => {
-        setProba(data.proba);
+    // fetch only if an uploaded image present
+    if (result.length !== 0) {
+      const body = {
+        results: result
+      }
+      fetch(`/api/predict`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       })
-      .catch(error => console.log(error))
+        .then(response => response.json())
+        .then(data => {
+          setProba(data.proba);
+        })
+        .catch(error => console.log(error))
+    }
   }, [result])
 
+  // re-render when proba changes
+  // without this call, we always see the previous proba
   useEffect(() => { console.log("Proba =", proba) }, [proba])
 
   const handleImg = () => {
@@ -46,7 +51,7 @@ function UploadImage() {
         onChange={(event) => {
           console.log(event.target.files[0]);
           setSelectedImage(URL.createObjectURL(event.target.files[0]));
-          setResult([]);
+          // setResult([]);
         }}
       />
       {selectedImage && (
@@ -54,7 +59,8 @@ function UploadImage() {
           <br />
           <button onClick={() => {
             setSelectedImage(null);
-            setResult([])
+            setResult([]);
+            setProba(-1)
           }}>Remove</button>
           <br />
           <img id="img" alt="not found" width={"450px"} src={selectedImage} />
