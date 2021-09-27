@@ -1,12 +1,17 @@
-import { Button, Input, makeStyles } from '@material-ui/core';
+import { Button, Grid, Input, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { convertImage } from '../helpers/image';
 
 const resultHeight = 224;
 const resultWidth = 224;
 
-const useStyles = makeStyles(() => ({
-  button: {}
+const useStyles = makeStyles((theme) => ({
+  positive: {
+    color: theme.palette.success.main
+  },
+  negative: {
+    color: theme.palette.error.main
+  }
 }))
 
 function UploadImage() {
@@ -49,66 +54,93 @@ function UploadImage() {
   }
 
   return (
-    <div>
-      <label htmlFor="raised-button-file">
-        <Input
-          accept="image/*"
-          style={{ display: 'none' }}
-          id="raised-button-file"
-          type="file"
-          onChange={(event) => {
-            console.log(event.target.files[0]);
-            setSelectedImage(URL.createObjectURL(event.target.files[0]));
-          }}
-        />
-        <Button variant="contained"
-          size="large"
-          component="span"
-        // className={classes.button}
-        >
-          Upload Image
-        </Button>
-      </label>
-      {selectedImage && (
-        <div>
-          <br />
-          <Button
-            variant="contained"
-            onClick={() => {
-              setSelectedImage(null);
-              setResult([]);
-              setProba(-1)
-            }}>
-            Remove
-          </Button>
-          <br />
-          <img id="img" alt="not found" width={"450px"} src={selectedImage} />
-          <br />
-          {proba > -1 &&
-            <div>{proba > 0.5 ?
-              <div>
-                <span style={{ color: 'green' }}>A Hot Dog</span>
-                <p>I'm {((proba) * 100).toFixed(0)} % confident</p>
-              </div>
-              :
-              <div>
-                <span style={{ color: 'red' }}>NOT a Hot Dog</span>
-                <p>I'm {((1 - proba) * 100).toFixed(0)} % confident</p>
-              </div>
-            }
-            </div>
-          }
-          <Button
-            variant="contained"
-            style={{ fontSize: "24px" }}
-            onClick={() => handleImg()}
+    <Grid
+      container
+      spacing={3}
+      direction="column"
+      alignItems="center"
+    >
+      <Grid item>
+        <Grid container spacing={2}>
+          <Grid item>
+            <label htmlFor="raised-button-file">
+              <Input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="raised-button-file"
+                type="file"
+                onChange={(event) => {
+                  console.log(event.target.files[0]);
+                  setSelectedImage(URL.createObjectURL(event.target.files[0]));
+                }}
+              />
+              <Button variant="contained"
+                size="large"
+                component="span"
+              // className={classes.button}
+              >
+                Upload Image
+              </Button>
+            </label>
+          </Grid>
+          <Grid item>
+            {selectedImage && (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setSelectedImage(null);
+                  setResult([]);
+                  setProba(-1)
+                }}>
+                Remove
+              </Button>
+            )}
+          </Grid>
+        </Grid>
+      </Grid>
+      {
+        selectedImage && (
+          <Grid container
+            direction="column"
+            alignItems="center"
+            spacing={2}
           >
-            Hot dog or not?
-          </Button>
+            <Grid item>
+              <img id="img" alt="not found" width={"350px"} src={selectedImage} />
+            </Grid>
+            {proba > -1 &&
+              <Grid item>
+                {/* <Grid
+                container
+                direction="column"
+                spacing={3}
+              > */}
+                {proba > 0.5 ?
+                  <div>
+                    <span className={classes.positive}>A Hot Dog</span>
+                    <p>I'm {((proba) * 100).toFixed(0)} % confident</p>
+                  </div>
+                  :
+                  <div>
+                    <span className={classes.negative}>NOT a Hot Dog</span>
+                    <p>I'm {((1 - proba) * 100).toFixed(0)} % confident</p>
+                  </div>
+                }
+                {/* </Grid> */}
+              </Grid>
+            }
+            <Button
+              variant="contained"
+              style={{ fontSize: "24px" }}
+              onClick={() => handleImg()}
+            >
+              Hot dog or not?
+            </Button>
 
-        </div>
-      )}
-    </div>
+          </Grid>
+        )
+      }
+    </Grid >
   )
 }
 
