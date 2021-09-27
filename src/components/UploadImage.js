@@ -1,15 +1,19 @@
-import { Button, Input } from '@material-ui/core';
+import { Button, Input, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { convertImage } from '../helpers/image';
 
+const resultHeight = 224;
+const resultWidth = 224;
+
+const useStyles = makeStyles(() => ({
+  button: {}
+}))
 
 function UploadImage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [result, setResult] = useState([])
   const [proba, setProba] = useState(-1)
-
-  const resultHeight = 224;
-  const resultWidth = 224;
+  const classes = useStyles();
 
   useEffect(() => {
     console.log("Result: ", result)
@@ -49,18 +53,16 @@ function UploadImage() {
       <label htmlFor="raised-button-file">
         <Input
           accept="image/*"
-          // className={classes.input}
           style={{ display: 'none' }}
           id="raised-button-file"
-          // multiple
           type="file"
           onChange={(event) => {
             console.log(event.target.files[0]);
             setSelectedImage(URL.createObjectURL(event.target.files[0]));
-            // setResult([]);
           }}
         />
         <Button variant="contained"
+          size="large"
           component="span"
         // className={classes.button}
         >
@@ -70,11 +72,13 @@ function UploadImage() {
       {selectedImage && (
         <div>
           <br />
-          <Button onClick={() => {
-            setSelectedImage(null);
-            setResult([]);
-            setProba(-1)
-          }}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setSelectedImage(null);
+              setResult([]);
+              setProba(-1)
+            }}>
             Remove
           </Button>
           <br />
@@ -84,17 +88,24 @@ function UploadImage() {
             <div>{proba > 0.5 ?
               <div>
                 <span style={{ color: 'green' }}>A Hot Dog</span>
-                <p>I'm {((proba) * 100).toFixed(1)} % confident</p>
+                <p>I'm {((proba) * 100).toFixed(0)} % confident</p>
               </div>
               :
               <div>
                 <span style={{ color: 'red' }}>NOT a Hot Dog</span>
-                <p>I'm {((1 - proba) * 100).toFixed(1)} % confident</p>
+                <p>I'm {((1 - proba) * 100).toFixed(0)} % confident</p>
               </div>
             }
             </div>
           }
-          <button style={{ fontSize: "24px" }} onClick={() => handleImg()}>Hot dog or not?</button>
+          <Button
+            variant="contained"
+            style={{ fontSize: "24px" }}
+            onClick={() => handleImg()}
+          >
+            Hot dog or not?
+          </Button>
+
         </div>
       )}
     </div>
