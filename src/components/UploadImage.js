@@ -1,3 +1,4 @@
+import { Button, Input } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { convertImage } from '../helpers/image';
 
@@ -45,23 +46,37 @@ function UploadImage() {
 
   return (
     <div>
-      <input
-        type="file"
-        name="myImage"
-        onChange={(event) => {
-          console.log(event.target.files[0]);
-          setSelectedImage(URL.createObjectURL(event.target.files[0]));
-          // setResult([]);
-        }}
-      />
+      <label htmlFor="raised-button-file">
+        <Input
+          accept="image/*"
+          // className={classes.input}
+          style={{ display: 'none' }}
+          id="raised-button-file"
+          // multiple
+          type="file"
+          onChange={(event) => {
+            console.log(event.target.files[0]);
+            setSelectedImage(URL.createObjectURL(event.target.files[0]));
+            // setResult([]);
+          }}
+        />
+        <Button variant="contained"
+          component="span"
+        // className={classes.button}
+        >
+          Upload Image
+        </Button>
+      </label>
       {selectedImage && (
         <div>
           <br />
-          <button onClick={() => {
+          <Button onClick={() => {
             setSelectedImage(null);
             setResult([]);
             setProba(-1)
-          }}>Remove</button>
+          }}>
+            Remove
+          </Button>
           <br />
           <img id="img" alt="not found" width={"450px"} src={selectedImage} />
           <br />
