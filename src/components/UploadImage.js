@@ -25,7 +25,6 @@ function UploadImage() {
   const classes = useStyles();
 
   useEffect(() => {
-    console.log("Result: ", result)
     // fetch only if an uploaded image present
     if (result.length !== 0) {
       const body = {
@@ -65,6 +64,9 @@ function UploadImage() {
       alignItems="center"
     >
       <Grid item>
+        Welcome to the HOT DOG Challenge! Can you fool me?
+      </Grid>
+      <Grid item>
         <Grid container spacing={2}>
           <Grid item>
             <label htmlFor="raised-button-file">
@@ -76,6 +78,8 @@ function UploadImage() {
                 onChange={(event) => {
                   console.log(event.target.files[0]);
                   setSelectedImage(URL.createObjectURL(event.target.files[0]));
+                  setResult([]);
+                  setProba(-1)
                 }}
               />
               <Button variant="contained"
@@ -87,7 +91,7 @@ function UploadImage() {
               </Button>
             </label>
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             {selectedImage && (
               <Button
                 variant="contained"
@@ -100,7 +104,7 @@ function UploadImage() {
                 Remove
               </Button>
             )}
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
       {
