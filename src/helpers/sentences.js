@@ -29,7 +29,7 @@ const getRandomSentence = ((range, isTrue) => {
     ]
   }
   const sentId = getRandomInt(sentences[range].length)
-  console.log(sentences[range].length, sentId)
+  // console.log(sentences[range].length, sentId)
   return sentences[range][sentId]
 })
 
