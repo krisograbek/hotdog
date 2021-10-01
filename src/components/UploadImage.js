@@ -47,7 +47,9 @@ function UploadImage() {
 
   // re-render when proba changes
   // without this call, we always see the previous proba
-  useEffect(() => { console.log("Proba =", proba) }, [proba])
+  useEffect(() => {
+    // console.log("Proba =", proba) 
+  }, [proba])
 
   const handleImg = () => {
     // get canvas with the image
@@ -76,7 +78,7 @@ function UploadImage() {
                 id="raised-button-file"
                 type="file"
                 onChange={(event) => {
-                  console.log(event.target.files[0]);
+                  // console.log(event.target.files[0]);
                   setSelectedImage(URL.createObjectURL(event.target.files[0]));
                   setResult([]);
                   setProba(-1)

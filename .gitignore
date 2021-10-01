@@ -27,3 +27,6 @@ __pycache__
 api/images/*
 api/datasets/*
 api/models/*
+api/client/*
+
+shell-scripts
