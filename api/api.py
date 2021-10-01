@@ -21,7 +21,7 @@ def get_predict():
     # print("My prediction", probas[0])
     # get the probability if it is an image of a hot dog
     is_hotdog_proba = probas[0][0]
-
+    image = None
     return { 'proba': float(is_hotdog_proba) }
 
 if __name__ == "__main__":

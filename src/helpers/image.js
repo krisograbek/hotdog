@@ -1,7 +1,8 @@
 // converts an image to a 3D array and returns the array
 export function convertImage(image, resultWidth, resultHeight) {
-  const canvas = drawImageToCanvas(image, resultWidth, resultHeight);
-  const ctx = canvas.getContext('2d');
+  let canvas = document.createElement('canvas');
+  canvas = drawImageToCanvas(canvas, image, resultWidth, resultHeight);
+  let ctx = canvas.getContext('2d');
   // convert image to a 3D array
   let result_arr = [];
   for (let y = 0; y < canvas.height; y++) {
@@ -11,12 +12,14 @@ export function convertImage(image, resultWidth, resultHeight) {
       result_arr[y].push([data[0], data[1], data[2]]);
     }
   }
+  // remove 
+  canvas = null;
+  ctx = null;
   return result_arr
 }
 
 // draws and returns an image of shape (resultWidth, resultHeight, 3)
-export function drawImageToCanvas(image, resultWidth, resultHeight) {
-  const canvas = document.createElement('canvas');
+export function drawImageToCanvas(canvas, image, resultWidth, resultHeight) {
   canvas.width = resultWidth;
   canvas.height = resultHeight
   // draw and reshape image

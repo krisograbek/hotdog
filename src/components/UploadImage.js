@@ -53,8 +53,9 @@ function UploadImage() {
 
   const handleImg = () => {
     // get canvas with the image
-    const img = document.getElementById("img");
+    let img = document.getElementById("img");
     const result_array = convertImage(img, resultWidth, resultHeight);
+    img = null;
     setResult(result_array)
   }
 
