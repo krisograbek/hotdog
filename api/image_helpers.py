@@ -11,4 +11,5 @@ def image_to_numpy(image):
     # convert image to 4 dimentions with batch_size = 1
     # we make predictions always for a single image
     images = np.expand_dims(np_image, axis=0)
+    images = np.float32(images)
     return images
