@@ -1,4 +1,3 @@
-import keras
 from flask import Flask, request
 import tensorflow as tf
 import numpy as np
