@@ -26,7 +26,8 @@ venv
 __pycache__
 api/images/*
 api/datasets/*
-api/models/*
-api/client/*
+api/models/*.h5
+api/models/*.tflite
+api/client/*/
 
 shell-scripts
