@@ -77,9 +77,10 @@ Runs the app in the development mode.
 First, navigate to the project directory. Then, run the following commands:
 ```
 $ npm run build
-$ rm -r api/client/*
 $ cp -r build/* api/client/
-$ venv\Scripts\activate
+$ source venv/bin/activate (linux)
+or
+$ venv\Scripts\activate (windows)
 (venv)$ flask run
 ```
 The app runs in the production mode.
