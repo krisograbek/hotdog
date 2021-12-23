@@ -1,13 +1,15 @@
 from flask import Flask, request
-import tensorflow as tf
 import numpy as np
+import tflite_runtime.interpreter as tflite
+# import tensorflow as tf
 
 from image_helpers import image_to_numpy
 
 app = Flask(__name__, static_folder='./client', static_url_path='/')
-# model = keras.models.load_model('./models/hotdog_vgg.h5')
 
-interpreter = tf.lite.Interpreter('./models/hotdog_vgg.tflite')
+interpreter = tflite.Interpreter('./models/hotdog_vgg.tflite')
+# interpreter = tf.lite.Interpreter('./models/hotdog_vgg.tflite')
+
 interpreter.allocate_tensors()
 
 
@@ -37,4 +39,5 @@ def get_predict():
     return { 'proba': float(is_hotdog_proba) }
 
 if __name__ == "__main__":
+    # app.run(debug=True, host='0.0.0.0')
     app.run()
