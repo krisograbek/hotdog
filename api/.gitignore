@@ -6,4 +6,4 @@ images/
 # models/
 training.ipynb
 .flaskenv
-reqs_local.txt
+# reqs_local.txt
